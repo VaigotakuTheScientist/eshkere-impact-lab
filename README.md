@@ -10,13 +10,13 @@ Packa upp hela mappen och öppna `index.html` i en webbläsare. Behåll undermap
 
 | Fil | Syfte |
 | --- | --- |
-| index.html | Startsida: syfte, illustration och vägar vidare. Börja studera här. |
+| index.html | Startsida: CSS-kub med sex teman, paus, statisk temalista och vägar vidare. Börja studera här. |
 | projekt.html | Tre fiktiva idéer och utfällbara experiment med HTML-elementen details/summary. |
 | utvardera.html | Märkt formulär, metodförklaring, no-JS-information och resultatregion. |
 | css/style.css | En enda gemensam stilmall: variabler, layout, komponenter, mobil, minskad rörelse och utskrift. |
-| js/evaluation.js | Validerad beräkning, förifyllning via URL, formulärhändelser och säker textvisning. |
+| js/evaluation.js | Validerad beräkning, förifyllning via URL, formulärhändelser, SVG-poängring och säker textvisning. |
 | images/logo.svg | AI-stödd prototyplogga och favicon. |
-| images/lab-map.svg | Egen vektorillustration av arbetsprocessen. |
+| images/lab-map.svg | Tidigare vektorillustration av arbetsprocessen, sparad som skiss/reserv; används inte på startsidan. |
 | docs/planering.md | Svensk planering, kravkoppling, research, arkitektur och reflektionsunderlag. |
 | docs/wireframes.svg | Tre sidlayouter på dator och startsidan på mobil, inklusive rörelsesignaler. |
 | docs/logo-process.svg | Dokumenterad konceptskiss och färdig loggform. |
@@ -38,3 +38,7 @@ Beräkningsfunktionen `calculateScore` är separat från DOM-hanteringen. Den ka
 5. Testa med Tab/Enter och en smal webbläsare efter varje ändring.
 
 AI-stöd har använts för implementation och dokumentation. Anpassa den egna reflektionen före inlämning. Inga ändringar har gjorts i Eshkeres befintliga webbplats. Källkoden finns i GitHub-repot eshkere-impact-lab. Webbplatsen har inte driftsatts.
+
+## Animationer
+
+Kub, kort och entréer styrs helt av CSS. En vanlig kryssruta pausar kuben även utan JavaScript. Alla sex teman står i en statisk lista. JavaScript räknar poängen och skapar en dekorativ SVG-ring; CSS animerar dess linje medan textvärdet visas direkt. Vid minskad rörelse visas allt i färdigt, stillastående tillstånd. Läs avsnitt 2 i planeringen för en jämförelse och kodförklaring.

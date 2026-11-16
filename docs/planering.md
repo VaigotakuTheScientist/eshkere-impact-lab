@@ -12,22 +12,42 @@ Målgruppen är nyfikna elever, studenter och personer som vill börja undersök
 
 ## 2. Research, inspiration och jämförelse av rörelse
 
-Eshkere är konceptuell inspiration för utforskande och experiment. Referens: https://vaigotakuthescientist.github.io/eshkere/. Sidan kunde inte läsas med webbverktyget under arbetet; dokumentet gör därför inga påståenden om dess faktiska färger eller animationer. Ingen befintlig kod kopierades.
+Eshkere är konceptuell inspiration för utforskande och experiment. Referens: https://vaigotakuthescientist.github.io/eshkere/. Den ursprungliga sidan kunde inte läsas med webbverktyget; inga påståenden görs om dess faktiska animationer och ingen befintlig Eshkere-kod kopierades.
 
-Den egna visuella riktningen är ett redaktionellt labb: varm pappersbakgrund, mörkgrön text, orange accenter, ett rutnät och numrerade steg. Arial/Helvetica med sans-serif som reserv används för text. Georgia/Times New Roman med serif som reserv ger rubrikernas betoning en annan karaktär. Luft och tunna linjer skiljer innehåll utan att varje del behöver en ruta.
+Formgivningen använder varm pappersbakgrund, mörkgrön text och orange accenter. Kubens mörka scen och olika färgade ytor gör djupet tydligt. Arial/Helvetica/sans-serif används för text och Georgia/Times New Roman/serif för betoning. Alla typsnitt har reserver.
 
-Två undersökta tekniska inspirationskällor, lästa 16 november 2026:
+Källor och inspiration, lästa 16 november 2026:
 
-- [MDN: transition](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/transition). Beskriver övergångar mellan tillstånd. Idén används till knappens bakgrund och en liten förflyttning.
-- [MDN: prefers-reduced-motion](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/At-rules/@media/prefers-reduced-motion). Beskriver hur sidan kan respektera användarens inställning för mindre rörelse. Här stängs animation och övergångar av.
+- [W3Schools: CSS 3D Transforms – Cube](https://www.w3schools.com/css/css3_3dtransforms_cube.asp). Inspiration för en kub med sex HTML-ytor. Projektet använder egen formgivning, svenska teman, pausfunktion och en statisk textlista.
+- [MDN: Using CSS transforms](https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Transforms/Using). Teknisk referens för perspektiv, rotation, förflyttning och tredimensionellt djup.
+- [MDN: transition](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/transition). Referens för övergångar mellan vanliga tillstånd och hover/fokus.
+- [MDN: prefers-reduced-motion](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/At-rules/@media/prefers-reduced-motion). Referens för att respektera användarens inställning för minskad rörelse.
 
-| Alternativ | Startsignal | Fördel | Nackdel / beslut |
+### Jämförelse: från diskret dekoration till meningsfull rörelse
+
+| Rörelse | Startsignal och längd | Funktion | Avvägning och tillgänglighet |
 | --- | --- | --- | --- |
-| Knappövergång, 0,18 sekunder | Muspekaren över knappen | Bekräftar att elementet är klickbart | Ingen information får bero på hover. Tangentbord får tydlig fokusram. Används. |
-| Engångsanimation, 0,6 sekunder | Startsidan laddas | Ger labbillustrationen en diskret introduktion | Kan störa vissa användare. Avaktiveras vid minskad rörelse. Används. |
-| Oändligt pulserande objekt | Kontinuerligt | Kan dra uppmärksamhet | Distraherar från läsning och bedömning. Väljs bort. |
+| 3D-kub | Sidladdning; 32 sekunder per varv, upprepas | Visar att AI-säkerhet har sex kompletterande perspektiv | Tydligt blickfång. En kryssruta pausar rotationen utan JavaScript. Vid minskad rörelse står kuben stilla. Alla teman finns även som vanlig text. |
+| Projektkort | Hover eller fokus på en länk/summary inuti kortet; 0,3 sekunder | Kortet lyfts 6 px med skugga och kantfärg för att visa aktivt innehåll | Fokus får samma återkoppling som mus. Ingen layout flyttas. Vid minskad rörelse används bara färg/skugga utan övergång eller förflyttning. |
+| Poängring | Giltig formulärinlämning; 1,2 sekunder | Visar den illustrativa poängens andel av 100 | Bara ringen animeras. Slutvärdet visas direkt som text. Minskad rörelse ger slutlig ring direkt. Ny inlämning skapar en ny ring och startar om animationen. |
+| Sidentréer | Sidladdning; 0,7 sekunder, högst 0,2 sekunders fördröjning | Skapar visuell ordning när rubrik, paneler och kort kommer in | Spelas en gång. CSS ändrar opacitet och position; ingen JavaScript-observatör behövs. Innehållet är direkt synligt utan animationer. |
+| Knappövergång | Hover/fokus; 0,18 sekunder | Bekräftar klickbarhet | Kortare än kortens rörelse för snabb återkoppling. Synlig fokusram finns kvar. |
 
-Detta är en jämförelse av rörelsetekniker och egna designalternativ, inte ett påstående att externa sajters animationer har observerats.
+Den första versionens SVG-illustration tonades bara in kort vid laddning. Den nya kuben gör rörelse till en central del av innehållet. Kuben visar teknisk säkerhet, styrning, utvärderingar, fältbyggande, tolkbarhet och prognoser. Förklaringen under kuben gör att ingen behöver vänta på en viss sida eller läsa lutande text.
+
+Kontinuerlig puls och blinkande effekter valdes bort. Bara kuben rör sig kontinuerligt, med en tydlig pausmöjlighet. Kort och poängring reagerar på besökarens handling. Entréer varar mindre än en sekund. Detta ger en tydlig hierarki mellan presentation och återkoppling.
+
+### Hur koden fungerar
+
+Scenen har `perspective: 1000px`. Kuben har `transform-style: preserve-3d`. Varje yta roteras och flyttas ut med `translateZ` motsvarande halva kubens bredd. Exempel: `.cube-right` använder `rotateY(90deg) translateZ(var(--half-cube))`. `@keyframes cube-turn` ändrar X- och Y-vinklar så att även ovan- och undersidan kommer fram. Färgskillnader, tunna kanter och en statisk skugga gör volymen tydlig utan WebGL eller bibliotek.
+
+Paus fungerar med CSS: `.motion-toggle:checked ~ .cube-stage .cube` sätter `animation-play-state: paused`. Kryssrutan fungerar med Tab och mellanslag samt med mus/touch. Den dekorativa kuben har `aria-hidden`, medan den vanliga listan med sex teman är tillgänglig för skärmläsare. Vid minskad rörelse döljs den då onödiga pauskontrollen och ersätts med en förklaring.
+
+Projektkort använder `:focus-within` så att det räcker att fokusera deras riktiga länkar; korten behöver inga extra tabbstopp. `transform: translateY(-6px)` kombineras med skugga och kantfärg. Mus-hover används bara på enheter som stöder hover.
+
+JavaScript skapar två SVG-cirklar vid inlämning. `pathLength="100"` normaliserar omkretsen. CSS-variabeln `--score-gap` är 100 minus poängen. `stroke-dashoffset` animeras från 100 till detta värde. För 60 poäng blir slutvärdet 40. SVG:n är dekorativ; resultatet 60 / 100 finns samtidigt som riktig text i en live-region. Ingen sifferräknare eller JavaScript-timer behövs. Resultatet placeras direkt efter formuläret och rullas in i vyn utan animerad scroll.
+
+Den globala regeln för `prefers-reduced-motion: reduce` stänger av animationer och övergångar. Extra regler tar även bort kortens förflyttning. Beräkning, länkar, text, pauskontroll och teman är inte beroende av att en animation slutförs.
 
 ## 3. Webbplatskarta
 
@@ -52,7 +72,7 @@ Alla tre sidor länkar direkt till varandra via huvudmenyn. Kontaktsida behövs 
 
 Skisserna visar logga, meny, rubriker, text, illustration och knappar. På dator har startsidan två kolumner. Projektidéer visas i rader. Verktyget har formulär till vänster och metod till höger. På mobil blir innehållet en kolumn och menyn är alltid synlig. Detta undviker en extra JavaScript-meny.
 
-Rörelse markeras vid startsidans illustration (sidladdning) och primärknappar (hover). Skisserna är dokumentationsskisser framtagna med AI och återger den valda layouten; de är inte handritade elevoriginal.
+Rörelse markeras vid startsidans kub (rotation och paus), projektkort (hover/fokus), formulärresultat (poängring) och sidentréer (sidladdning). Skisserna är dokumentationsskisser framtagna med AI och återger den valda layouten; de är inte handritade elevoriginal.
 
 ![Loggans skiss och färdiga form](logo-process.svg)
 
@@ -64,7 +84,7 @@ Loggidé: ett enkelt E i en kvadrat och en liten punkt som symboliserar ett expe
 2. Lägg projektet i en helt separat mapp.
 3. Skapa tre HTML-sidor med samma meny, logga och extern CSS.
 4. Skriv innehåll, fiktiva exempel och tydliga begränsningar.
-5. Lägg till responsiv layout och diskret rörelse.
+5. Lägg till responsiv layout, 3D-kub, kortövergångar och sidentréer.
 6. Lägg till ett litet formulär med JavaScript.
 7. Testa länkar, skärmbredder, tangentbord och beräkningar.
 8. Dokumentera och packa projektmappen som ZIP.
@@ -90,7 +110,7 @@ Tomma obligatoriska fält stoppas av HTML-validering. Namn med enbart mellanslag
 | Gemensam extern CSS | css/style.css på alla tre sidor |
 | Mobil och dator | Flexbox, Grid och brytpunkter vid 900/680 px; testade bredder i testprotokollet |
 | Webbsäkra typsnitt och reserver | Arial/Helvetica/sans-serif och Georgia/Times New Roman/serif |
-| Bilder och alt-texter | Lokal SVG-illustration med alt-text; loggbilden har tom alt eftersom länken har eget namn |
+| Bilder och alt-texter | Loggbilden har tom alt eftersom länken har eget namn; dekorativ kub har aria-hidden och motsvarande information som vanlig text |
 | Loggskiss och AI-stödd logga | docs/logo-process.svg och images/logo.svg |
 | Sitemap och layoutskisser | Avsnitt 3 samt docs/wireframes.svg |
 | Research och jämförelse av rörelse | Avsnitt 2, med källor och designbeslut |
@@ -108,9 +128,11 @@ Tomma obligatoriska fält stoppas av HTML-validering. Namn med enbart mellanslag
 
 **JavaScript-exempel:** `Math.round((impact + feasibility + evidence) / 15 * 100)` räknar om tre betyg till modellens poäng. En submit-lyssnare stoppar omladdning med `event.preventDefault()`, läser fälten, anropar beräkningen och skapar resultattext. `textContent` gör att inmatning behandlas som text, även om den innehåller HTML-tecken.
 
-**Vad upptäcktes och rättades?** Den första länkkontrollen hittade att planeringsdokumentet ännu inte hade skapats. Dokumentet lades till innan sluttestet. Testmiljön saknade Playwrights medföljande Chromium; testerna kördes i installerad Microsoft Edge. Slutliga resultat och begränsningar redovisas i testprotokollet utan att kalla automatiserade tester för användartester.
+**Vad upptäcktes vid animationsuppdateringen?** Den tidigare rörelsen var för diskret enligt återkopplingen. Kuben ersatte därför den statiska huvudillustrationen. Resultatet flyttades till direkt under formuläret så att poängringen syns före metodtexten på mobil. Rörelsetester kontrollerade både aktiv och minskad rörelse, omstart av ringen och paus utan JavaScript. Se det uppdaterade testprotokollet.
 
-**Vad kan utvecklas vidare?** Genomför användartester med målgruppen. Undersök om frågorna förstås på samma sätt av olika personer. Lägg eventuellt till lokal export av anteckningar, men först när behovet är tydligt. Före integration behövs en granskning av Eshkeres riktiga struktur och formspråk. Poängmodellen bör fortsätta beskrivas som illustrativ om den inte valideras.
+**Vad upptäcktes i första versionen?** Den första länkkontrollen hittade att planeringsdokumentet ännu inte hade skapats. Dokumentet lades till innan sluttestet. Testmiljön saknade Playwrights medföljande Chromium; testerna kördes i installerad Microsoft Edge. Slutliga resultat och begränsningar redovisas i testprotokollet utan att kalla automatiserade tester för användartester.
+
+**Vad kan utvecklas vidare?** Genomför användartester med målgruppen. Undersök om frågorna förstås på samma sätt av olika personer. Undersök om kubens tempo och pausfunktion passar målgruppen. Lägg eventuellt till lokal export av anteckningar, men först när behovet är tydligt. Före integration behövs en granskning av Eshkeres riktiga struktur och formspråk. Poängmodellen bör fortsätta beskrivas som illustrativ om den inte valideras.
 
 ## 9. Inlämning
 

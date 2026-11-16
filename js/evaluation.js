@@ -16,7 +16,7 @@ const examples = {
   modellkort: "Exempel: Ett öppet kort för modellens gränser"
 };
 const selectedIdea = new URLSearchParams(window.location.search).get("ide");
-if (examples[selectedIdea]) idea.value = examples[selectedIdea];
+if (Object.hasOwn(examples, selectedIdea)) idea.value = examples[selectedIdea];
 document.querySelector("#calculate").disabled = false;
 
 // Använd textContent så att användarens text aldrig tolkas som HTML.
@@ -41,7 +41,30 @@ form.addEventListener("submit", function (event) {
   result.replaceChildren();
   addResultText("p", "ILLUSTRATIV POÄNG · INTE ETT FINANSIERINGSBESLUT", "eyebrow");
   addResultText("h2", idea.value.trim());
-  addResultText("p", score + " / 100", "score");
+  // SVG visar samma poäng som texten. CSS sköter själva rörelsen.
+  // pathLength=100 gör att stroke-dashoffset kan räknas direkt från poängen.
+  const visual = document.createElement("div");
+  visual.className = "score-visual";
+  const svgNamespace = "http://www.w3.org/2000/svg";
+  const ring = document.createElementNS(svgNamespace, "svg");
+  ring.setAttribute("viewBox", "0 0 160 160");
+  ring.setAttribute("aria-hidden", "true");
+  for (const className of ["score-track", "score-fill"]) {
+    const circle = document.createElementNS(svgNamespace, "circle");
+    circle.setAttribute("cx", "80");
+    circle.setAttribute("cy", "80");
+    circle.setAttribute("r", "68");
+    circle.setAttribute("pathLength", "100");
+    circle.setAttribute("class", className);
+    ring.append(circle);
+  }
+  visual.style.setProperty("--score-gap", 100 - score);
+  visual.append(ring);
+  const scoreText = document.createElement("p");
+  scoreText.className = "score";
+  scoreText.textContent = score + " / 100";
+  visual.append(scoreText);
+  result.append(visual);
   addResultText("p", `Nytta: ${impact}/5 · Genomförbarhet: ${feasibility}/5 · Kunskapsläge: ${evidence}/5`);
   addResultText("p", evidence <= 2
     ? "Nästa steg: samla underlag. Ett svagt kunskapsläge gör slutsatsen osäker, även om totalpoängen är hög."
@@ -52,6 +75,8 @@ form.addEventListener("submit", function (event) {
     : "Nästa steg: skriv en testbar fråga och bestäm i förväg vad som skulle få dig att ändra uppfattning.");
   const uncertainty = form.elements.uncertainty.value.trim();
   if (uncertainty) addResultText("p", "Att undersöka: " + uncertainty);
+  // Visa resultatet även på små skärmar. Ingen animerad scroll behövs.
+  result.scrollIntoView({ block: "nearest", behavior: "instant" });
 });
 
 // Dölj gamla slutsatser direkt när underlaget ändras.

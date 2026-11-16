@@ -48,3 +48,25 @@ Den första länkkontrollen upptäckte den ännu oskapade planeringsfilen. Den s
 ## Begränsningar
 
 Detta är inte ett användartest eller en fullständig WCAG-granskning. Inga tester med skärmläsare, fysisk mobil, Safari eller Firefox har genomförts. Tester vid bestämda skärmbredder ersätter inte granskning på varje möjlig enhet. Ingen extern HTML-validator användes. Den illustrativa poängmodellens vetenskapliga giltighet har inte testats och påstås inte.
+
+
+## Uppdatering: tydligare animationer
+
+Testat 16 november 2026 med Playwright och installerad Microsoft Edge. Samtliga tidigare funktionstester kördes på den uppdaterade implementationen och gick igenom.
+
+| Ny kontroll | Resultat |
+| --- | --- |
+| Sex kubytor och sex statiska teman | Godkänt |
+| preserve-3d och transform som faktiskt ändras över tid | Godkänt |
+| Tab/fokus och mellanslag på pauskryssrutan | Godkänt: paus och återstart |
+| Samma transform efter väntan under paus | Godkänt |
+| Åtta vinklar vid vardera 320, 375, 768 och 1280 px | Godkänt: ingen horisontell dokumentrullning i 32 prover |
+| Kort vid hover respektive fokus inuti | Godkänt: transform aktiverades |
+| Poängring efter giltig inlämning | Godkänt: draw-score kördes, texten visade 60 / 100 direkt |
+| Ringens slutvärde | Godkänt: stroke-dashoffset blev 40 för 60 poäng |
+| Ny inlämning | Godkänt: ringanimationen startade om |
+| Minskad rörelse | Godkänt: kub och ring saknade animation, ringens slutvärde var korrekt, kort flyttades inte |
+| JavaScript avstängt på startsidan | Godkänt: pauskryssrutan fungerade, sex teman fanns kvar |
+| Visuell granskning av dator, mobil och mobilresultat | Godkänt: kub, läsbar temalista och poängring granskades i skärmbilder |
+
+Den nya versionen är fortfarande inte testad med fysisk mobil, skärmläsare, Safari eller Firefox. Den illustrativa poängmodellens begränsningar gäller även när resultatet visas med en ring. Animationens grafiska precision innebär ingen vetenskaplig validering.
