@@ -42,3 +42,7 @@ AI-stöd har använts för implementation och dokumentation. Anpassa den egna re
 ## Animationer
 
 Kub, kort och entréer styrs helt av CSS. En vanlig kryssruta pausar kuben även utan JavaScript. Alla sex teman står i en statisk lista. JavaScript räknar poängen och skapar en dekorativ SVG-ring; CSS animerar dess linje medan textvärdet visas direkt. Vid minskad rörelse visas allt i färdigt, stillastående tillstånd. Läs avsnitt 2 i planeringen för en jämförelse och kodförklaring.
+
+## Cache vid publicering
+
+CSS- och JavaScript-länkarna har versionsparametern `?v=20261116-motion1`. Ändra versionen i alla berörda HTML-filer när dessa resurser uppdateras. Det hindrar att en ny sida använder en äldre cachad stilmall. Filnamnen på disk ändras inte.

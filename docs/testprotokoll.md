@@ -70,3 +70,7 @@ Testat 16 november 2026 med Playwright och installerad Microsoft Edge. Samtliga 
 | Visuell granskning av dator, mobil och mobilresultat | Godkänt: kub, läsbar temalista och poängring granskades i skärmbilder |
 
 Den nya versionen är fortfarande inte testad med fysisk mobil, skärmläsare, Safari eller Firefox. Den illustrativa poängmodellens begränsningar gäller även när resultatet visas med en ring. Animationens grafiska precision innebär ingen vetenskaplig validering.
+
+## Kontroll av GitHub Pages och cache
+
+Efter rapport om en oformaterad kub kontrollerades den publicerade sidan i en ny Edge-session. Kubens transform ändrades över tid, temalistan hade Grid-layout och meddelandet om minskad rörelse var dolt. Livefilerna motsvarade arbetskopian. Skärmbilden stämde med äldre CSS tillsammans med ny HTML. Versionsparametrar infördes därför på CSS och JavaScript för att undvika denna blandning vid uppdateringar.
