@@ -1,7 +1,11 @@
 /* Gemensamt formspråk för alla tre sidor. Inga externa typsnitt. */
+/* LEARNING: DESIGN VARIABLES: :root defines reusable colors; var(--accent) reads one. */
 :root { --paper: #f7f5ed; --ink: #182c26; --muted: #58645b; --accent: #b93616; --line: #d3d6cb; --panel: #e9e8dd; }
+/* LEARNING: BOX SIZING: width includes an element's padding and borders. */
 * { box-sizing: border-box; }
+/* LEARNING: BODY DEFAULTS: font, text color, background and line height are inherited by many children. */
 body { margin: 0; background: var(--paper); color: var(--ink); font-family: Arial, Helvetica, sans-serif; line-height: 1.65; }
+/* LEARNING: RESPONSIVE CONTAINER: min() limits content width; margin-inline:auto centers it. */
 .wrap { width: min(1200px, calc(100% - 64px)); margin-inline: auto; }
 a { color: inherit; text-underline-offset: 5px; }
 button, input, select, textarea { font: inherit; }
@@ -9,26 +13,31 @@ button, select { cursor: pointer; }
 img { max-width: 100%; height: auto; }
 h1, h2, h3, p, figure { margin: 0; }
 h1, h2, h3 { line-height: 1.12; letter-spacing: -.045em; }
+/* LEARNING: FLUID TYPOGRAPHY: clamp(min,preferred,max) grows text without making it too small or large. */
 h1 { font-size: clamp(2.6rem, 4.8vw, 4.4rem); font-weight: 500; }
 h1 em { font-family: Georgia, 'Times New Roman', serif; font-weight: 400; color: var(--accent); }
 h2 { font-size: clamp(1.6rem, 2.5vw, 2.2rem); font-weight: 500; }
 h3 { font-size: 1.35rem; }
 p + p { margin-top: 1rem; }
+/* LEARNING: ACCESSIBILITY: focus outlines make keyboard navigation visible. */
 :focus-visible { outline: 3px solid var(--accent); outline-offset: 5px; }
 .skip-link { position: absolute; left: 16px; top: -100px; z-index: 5; background: var(--ink); color: white; padding: 12px; }
 .skip-link:focus { top: 10px; }
+/* LEARNING: FLEXBOX: this row positions the brand and the navigation. */
 .site-header { min-height: 108px; display: flex; align-items: center; justify-content: space-between; gap: 24px; border-bottom: 1px solid var(--line); }
 .brand { display: flex; align-items: center; gap: 12px; text-decoration: none; font-size: 1.8rem; font-weight: bold; line-height: 1; letter-spacing: -.06em; }
 .brand-sub { display: block; margin-top: 7px; font-size: .6rem; letter-spacing: .22em; }
 nav { display: flex; flex-wrap: wrap; gap: 26px; }
 nav a { padding: 10px 0; text-decoration: none; font-size: .9rem; border-bottom: 2px solid transparent; }
 nav a[aria-current], nav a:hover { border-color: var(--accent); }
+/* LEARNING: CSS GRID: fractional tracks divide the hero into two columns. */
 .hero { display: grid; grid-template-columns: 1.15fr 1fr; gap: 52px; align-items: center; padding-block: 76px; }
 .eyebrow { font-size: .7rem; letter-spacing: .13em; font-weight: bold; }
 .hero .eyebrow, .page-intro .eyebrow { margin-bottom: 24px; }
 .dot { display: inline-block; width: 8px; height: 8px; margin-right: 8px; border-radius: 50%; background: var(--accent); }
 .lead { max-width: 650px; font-size: 1.08rem; color: var(--muted); margin-top: 28px; }
 .actions { display: flex; flex-wrap: wrap; align-items: center; gap: 22px; margin-top: 30px; }
+/* LEARNING: TRANSITION: the browser interpolates between normal and hover/focus states. */
 .button { display: inline-flex; align-items: center; justify-content: space-between; gap: 28px; padding: 14px 22px; background: var(--ink); color: var(--paper); border: 1px solid var(--ink); border-radius: 5px; text-decoration: none; font-weight: bold; font-size: .9rem; transition: background .18s, transform .18s; }
 .button:hover { background: #304b3d; transform: translateY(-2px); }
 .button:disabled { opacity: .5; cursor: not-allowed; }
@@ -50,6 +59,7 @@ nav a[aria-current], nav a:hover { border-color: var(--accent); }
 .site-footer { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 24px; margin-top: 64px; padding-block: 28px; border-top: 1px solid var(--line); font-size: .75rem; color: var(--muted); }
 .site-footer p + p { margin-top: 0; }
 .page-intro { padding-block: 60px 45px; }
+/* LEARNING: GRID CARD: columns hold an index, description, and link. */
 .project { display: grid; grid-template-columns: 80px 1fr 130px; gap: 30px; padding: 38px 0; border-bottom: 1px solid var(--line); align-items: start; }
 .project-index { font-family: Georgia, serif; font-size: 2.8rem; line-height: 1; color: var(--accent); }
 .project-index span { display: block; font: bold .6rem Arial, sans-serif; letter-spacing: .1em; margin-top: 14px; color: var(--muted); }
@@ -60,6 +70,7 @@ summary { cursor: pointer; font-weight: bold; font-size: .9rem; }
 details p { margin-top: 12px; color: var(--muted); }
 .callout { background: var(--panel); padding: 32px; margin-top: 40px; display: flex; align-items: center; justify-content: space-between; gap: 25px; }
 .callout h2 { margin-top: 12px; }
+/* LEARNING: FORM LAYOUT: grid puts the form next to the method explanation. */
 .evaluation-layout { display: grid; grid-template-columns: 1.2fr 1fr; gap: 48px; align-items: start; }
 .form-panel { border: 1px solid var(--line); padding: 32px; border-radius: 8px; }
 .field { margin-top: 24px; }
@@ -72,13 +83,17 @@ textarea { resize: vertical; }
 .method-panel h2 { margin: 18px 0 24px; }
 .method-panel p { font-size: .92rem; }
 .formula { border-block: 1px solid #b6bdae; padding-block: 18px; font-family: Georgia, serif; }
+/* LEARNING: STATE SELECTOR: only display the result panel background once it contains content. */
 .result-panel:not(:empty) { margin-top: 32px; padding: 32px; background: var(--ink); color: var(--paper); border-radius: 8px; overflow-wrap: anywhere; }
 .result-panel h2 { margin-top: 16px; }
 .score { font-family: Georgia, serif; font-size: 3.5rem; line-height: 1.3; }
 
+/* LEARNING: BREAKPOINT: CSS changes layout below 900 CSS pixels. */
 @media (max-width: 900px) { .hero { gap: 28px; } .hero h1 { font-size: 2.7rem; } .intro-strip { grid-template-columns: 1fr 1fr; } .intro-strip .eyebrow { grid-column: 1 / -1; } .evaluation-layout { gap: 24px; } }
 @media (max-width: 680px) { .wrap { width: calc(100% - 36px); } .site-header { padding-block: 20px; flex-direction: column; align-items: flex-start; gap: 18px; } nav { gap: 24px; } .hero { grid-template-columns: 1fr; padding-block: 38px; gap: 35px; } .hero h1 { font-size: clamp(2.4rem, 8vw, 3.3rem); } .hero-figure { transform: none; } .intro-strip, .steps, .evaluation-layout { grid-template-columns: 1fr; } .steps { gap: 28px; } .project { grid-template-columns: 42px 1fr; gap: 18px; } .project .text-link { grid-column: 2; margin-top: 0; } .project-index { font-size: 2rem; } .project-index span { font-size: .5rem; } .callout { flex-direction: column; align-items: flex-start; padding: 24px; } .form-panel, .method-panel { padding: 22px; } .page-intro { padding-top: 36px; } .site-footer { flex-direction: column; } }
+/* LEARNING: ACCESSIBILITY: browser/OS reduced-motion preferences disable animation and transitions. */
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
+/* LEARNING: PRINT MEDIA: navigation and buttons are not necessary on paper. */
 @media print { .site-header, .site-footer, .actions { display: none; } .wrap { width: 100%; } body { background: white; } .hero, .evaluation-layout { display: block; } }
 
 /* KUBEN: sex vanliga HTML-element, placerade en halv sidlängd från mitten.
@@ -90,13 +105,16 @@ textarea { resize: vertical; }
 .motion-toggle { display: inline-block; width: 18px; height: 18px; margin: 18px 8px 0 0; vertical-align: middle; accent-color: #f6ab73; }
 .motion-label { display: inline-block; font-size: .78rem; font-weight: normal; cursor: pointer; vertical-align: middle; margin-top: 18px; }
 .reduced-motion-note { display: none; font-size: .78rem; margin-top: 18px; }
+/* LEARNING: 3D STAGE: perspective controls how depth appears; --cube-size scales the whole cube. */
 .cube-stage { --cube-size: clamp(150px, 18vw, 220px); --half-cube: calc(var(--cube-size) / 2); position: relative; height: 390px; display: grid; place-items: center; perspective: 1000px; isolation: isolate; }
+/* LEARNING: 3D OBJECT: preserve-3d keeps the six faces at different depths; keyframes rotate this parent. */
 .cube { width: var(--cube-size); height: var(--cube-size); position: relative; transform-style: preserve-3d; transform: rotateX(-22deg) rotateY(-32deg); animation: cube-turn 32s linear infinite; }
 .cube-face { position: absolute; inset: 0; padding: 16px; display: flex; flex-direction: column; justify-content: space-between; border: 1px solid #f6c493; background: linear-gradient(135deg, #3b6357, #173a31); box-shadow: inset 0 0 24px #bddfc51c; backface-visibility: hidden; }
 .face-index { font-size: .55rem; letter-spacing: .15em; }
 .face-symbol { font-family: Georgia, serif; font-size: calc(var(--cube-size) * .3); line-height: 1; color: #ffd5a0; }
 .cube-face strong { font-size: clamp(.95rem, 1.6vw, 1.3rem); line-height: 1.15; letter-spacing: -.03em; }
 .face-note { font-size: .58rem; margin-top: 5px; }
+/* LEARNING: CUBE FACES: a face moves half the cube edge along local Z; other faces rotate first. */
 .cube-front { transform: translateZ(var(--half-cube)); }
 .cube-right { transform: rotateY(90deg) translateZ(var(--half-cube)); background: linear-gradient(135deg, #c95127, #873215); }
 .cube-back { transform: rotateY(180deg) translateZ(var(--half-cube)); }
@@ -107,8 +125,10 @@ textarea { resize: vertical; }
 .cube-shadow { position: absolute; width: 65%; height: 42px; bottom: 20px; border-radius: 50%; background: #051712; filter: blur(15px); opacity: .8; }
 .cube-orbit { position: absolute; width: 90%; height: 60%; border: 1px solid #5c84764d; border-radius: 50%; transform: rotate(-25deg); background: radial-gradient(ellipse, #b9dba51c, transparent 70%); }
 .cube-orbit::after { content: ""; position: absolute; inset: 14px; border: 1px dashed #5c847655; border-radius: 50%; }
+/* LEARNING: CSS-ONLY PAUSE: ~ selects the later sibling stage when the checkbox is checked. */
 .motion-toggle:checked ~ .cube-stage .cube { animation-play-state: paused; }
 /* Olika X-vinklar visar även kubens över- och undersida. */
+/* LEARNING: KEYFRAMES: X/Y rotations are interpolated through a 32-second infinite loop. */
 @keyframes cube-turn {
   0% { transform: rotateX(-22deg) rotateY(-32deg); }
   25% { transform: rotateX(22deg) rotateY(58deg); }
@@ -125,6 +145,7 @@ textarea { resize: vertical; }
 
 /* Kortet reagerar när en av dess vanliga länkar får tangentbordsfokus. */
 .project { margin-top: 20px; padding: 30px 24px; border: 1px solid var(--line); border-radius: 10px; transition: transform .3s ease, box-shadow .3s ease, border-color .3s ease, background .3s ease; }
+/* LEARNING: FOCUS-WITHIN: keyboard focus inside a card provides the same emphasis as mouse hover. */
 .project:focus-within { transform: translateY(-6px); box-shadow: 0 14px 28px #182c2614; border-color: var(--accent); background: #fffdf7; }
 @media (hover: hover) { .project:hover { transform: translateY(-6px); box-shadow: 0 14px 28px #182c2614; border-color: var(--accent); background: #fffdf7; } }
 .button:focus-visible { background: #304b3d; transform: translateY(-2px); }
@@ -132,10 +153,12 @@ textarea { resize: vertical; }
 /* Resultattexten är alltid färdig direkt. Endast den dekorativa ringen ritas. */
 .score-visual { position: relative; width: 210px; max-width: 100%; margin: 24px auto; }
 .score-visual svg { display: block; width: 100%; transform: rotate(-90deg); }
-.score-track, .score-fill { fill: none; stroke-width: 8; }
+.score-track, /* LEARNING: SVG RING: JavaScript sets --score-gap; CSS animates the visible fraction of the circle. */
+.score-fill { fill: none; stroke-width: 8; }
 .score-track { stroke: #496155; }
 .score-fill { stroke: #ffc28c; stroke-linecap: round; stroke-dasharray: 100; stroke-dashoffset: var(--score-gap); animation: draw-score 1.2s cubic-bezier(.22, 1, .36, 1); }
 .score-visual .score { position: absolute; inset: 0; display: grid; place-items: center; margin: 0; font-size: 2.3rem; }
+/* LEARNING: ANIMATED FEEDBACK: the ring draws, but the numeric result is immediate. */
 @keyframes draw-score { from { stroke-dashoffset: 100; } to { stroke-dashoffset: var(--score-gap); } }
 
 /* Entréer sker en gång vid sidladdning. Innehållet är synligt även utan CSS-rörelse.
@@ -145,8 +168,10 @@ textarea { resize: vertical; }
 .project:nth-child(2) { animation-delay: .1s; }
 .project:nth-child(3) { animation-delay: .2s; }
 .score-visual { animation: enter-page .4s ease-out; }
+/* LEARNING: PAGE ENTRANCE: elements fade and shift 22 pixels once. */
 @keyframes enter-page { from { opacity: .25; translate: 0 22px; } to { opacity: 1; translate: 0 0; } }
 @media (max-width: 900px) and (min-width: 681px) { .cube-stage { --cube-size: 155px; height: 310px; } }
+/* LEARNING: SMALL SCREENS: the cube and project cards scale to narrower layouts. */
 @media (max-width: 680px) {
   .cube-stage { --cube-size: clamp(145px, 48vw, 210px); height: 340px; }
   .theme-list { grid-template-columns: repeat(2, 1fr); }

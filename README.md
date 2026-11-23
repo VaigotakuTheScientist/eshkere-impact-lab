@@ -31,6 +31,8 @@ Beräkningsfunktionen `calculateScore` är separat från DOM-hanteringen. Den ka
 
 ## Studera och ändra
 
+**Lärguide:** [Study the commented source code](docs/learn-the-code.md). Kommentaren `LEARNING:` markerar förklaringar i HTML, CSS och JavaScript.
+
 1. Byt en rubrik i index.html och ladda om sidan.
 2. Ändra färgvariabeln `--accent` i CSS och kontrollera läsbarheten.
 3. Läs `calculateScore`, räkna 3 + 3 + 3 för hand och jämför med 60/100.
